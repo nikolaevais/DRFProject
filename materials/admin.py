@@ -1,8 +1,8 @@
 from django.contrib import admin
-from materials.models import Сourse, Lesson
+from materials.models import Course, Lesson
 
 
-@admin.register(Сourse)
+@admin.register(Course)
 class Course(admin.ModelAdmin):
     list_display = ("title", "description")
 

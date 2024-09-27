@@ -1,17 +1,17 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 
-from materials.models import Сourse, Lesson
-from materials.serializers import СourseSerializer, LessonSerializer, СourseDetailSerializer
+from materials.models import Course, Lesson
+from materials.serializers import CourseSerializer, LessonSerializer, CourseDetailSerializer
 
 
-class СourseViewSet(ModelViewSet):
-    queryset = Сourse.objects.all()
+class CourseViewSet(ModelViewSet):
+    queryset = Course.objects.all()
 
     def get_serializer_class(self):
         if self.action == 'create':
             return CourseDetailSerializer
-        return СourseSerializer
+        return CourseSerializer
 
 
 
