@@ -31,7 +31,7 @@ class Payment(models.Model):
 
     client = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь", **NULLABLE,
                                related_name="client")
-    date_payment = models.DateTimeField(auto_now_add=True, verbose_name='Дата оплаты')
+    date_payment = models.DateField(verbose_name='Дата оплаты')
     payment_course = models.ForeignKey(Сourse, on_delete=models.SET_NULL, verbose_name="Оплаченный курс", **NULLABLE)
     payment_lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, verbose_name="Оплаченный урок", **NULLABLE)
     payment_amount = models.PositiveIntegerField(verbose_name='Сумма оплаты')
@@ -42,4 +42,4 @@ class Payment(models.Model):
         verbose_name_plural = "Платежи"
 
     def __str__(self):
-        return f'{self.payment_date} {self.payment_course if self.payment_course else self.payment_lesson}'
+        return f'{self.date_payment} {self.payment_course if self.payment_course else self.payment_lesson}'
