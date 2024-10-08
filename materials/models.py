@@ -18,6 +18,7 @@ class Course(models.Model):
     def __str__(self):
         return f'{self.title} {self.description}'
 
+
 class Lesson(models.Model):
     title = models.CharField(max_length=35, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
@@ -32,3 +33,16 @@ class Lesson(models.Model):
 
     def __str__(self):
         return f'{self.title} {self.description}'
+
+
+class Subscription(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь")
+    is_active = models.BooleanField(default=True, verbose_name='активная')
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
+    def __str__(self):
+        return f'{self.course} {self.is_active}'
