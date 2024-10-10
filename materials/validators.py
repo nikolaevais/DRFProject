@@ -7,7 +7,12 @@ class YoutubeValidator:
         self.field = field
 
     def __call__(self, value):
-        youtube = re.compile("youtube.com")
-        tmp_val = dict(value).get(self.field)
-        if not bool(youtube.search(tmp_val)):
-            raise ValidationError("Указанный сайт нельзя использовать")
+        url = value.get(self.field)
+        if url and not url.startswith('https://www.youtube.com/'):
+            raise ValueError('Ссылки на сторонние видео запрещены')
+
+        #youtube = re.compile("youtube.com")
+        #tmp_val = dict(value).get(self.field)
+        #if not bool(youtube.search(tmp_val)):
+        #    raise ValidationError("Указанный сайт нельзя использовать")
+
