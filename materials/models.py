@@ -10,6 +10,7 @@ class Course(models.Model):
     image = models.ImageField(upload_to="materials/course/image/", verbose_name="Превью", **NULLABLE)
     description = models.TextField(verbose_name="Описание")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Владелец", **NULLABLE)
+    last_update = models.DateTimeField(verbose_name="Последнее обновление", **NULLABLE)
 
     class Meta:
         verbose_name = "Курс"

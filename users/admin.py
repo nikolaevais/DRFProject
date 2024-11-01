@@ -1,11 +1,10 @@
 from django.contrib import admin
 from users.models import User, Payment
 
+
 @admin.register(User)
 class User(admin.ModelAdmin):
-    list_display = ("email", "phone")
-
-
+    list_display = ("id", "email", "phone", "last_login", "is_active")
 
 
 @admin.register(Payment)

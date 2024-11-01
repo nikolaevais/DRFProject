@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -8,7 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from materials.models import Course, Lesson, Subscription
 from materials.paginations import CustomPagination
 from materials.serializers import CourseSerializer, LessonSerializer, CourseDetailSerializer, SubscriptionSerializer
+from materials.tasks import send_course_update_email
 from users.permissions import IsModerator, IsOwmer
+
 
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
@@ -33,6 +37,11 @@ class CourseViewSet(ModelViewSet):
         course.owner = self.request.user
         course.save()
 
+    def perform_update(self, serializer):
+        updated_course = serializer.save()
+        if updated_course:
+            send_course_update_email.delay(updated_course.id)
+
 
 class LessonCreateAPIView(CreateAPIView):
     queryset = Lesson.objects.all()
@@ -49,7 +58,6 @@ class LessonListAPIView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     pagination_class = CustomPagination
-
 
 
 class LessonRetrieveAPIView(RetrieveAPIView):
